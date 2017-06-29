@@ -318,6 +318,9 @@ class GridFieldBulkActionEditHandler extends GridFieldBulkActionHandler
      */
     public function doSave($data, $form)
     {
+        $config = $this->component->getConfig();
+	    $editableFields = $config['editableFields'];
+        
         $className = $this->gridField->list->dataClass;
         $singleton = singleton($className);
 
@@ -346,7 +349,7 @@ class GridFieldBulkActionEditHandler extends GridFieldBulkActionHandler
             );
 
             $recordForm->loadDataFrom($recordData);
-            $recordForm->saveInto($record);
+            $recordForm->saveInto($record, $editableFields);
             $id = $record->write();
 
             array_push($ids, $record->ID);
